@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اثبات رابطه‌های طولی در دایره</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f8f7;--ink:#12303a;--teal:#0b7f80;--pink:#d1346f;--am:#c98500;--card:#fff;--line:#cfe3e0;--ok:#1b8f5a;--mut:#6a858c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1b1f;--ink:#e3f1ef;--teal:#37c4be;--pink:#ff7aa8;--am:#ffc247;--card:#16282d;--line:#27424a;--ok:#4fd592;--mut:#97b3b8}}
+:root[data-theme="dark"]{--bg:#0e1b1f;--ink:#e3f1ef;--teal:#37c4be;--pink:#ff7aa8;--am:#ffc247;--card:#16282d;--line:#27424a;--ok:#4fd592;--mut:#97b3b8}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:2;
+background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px}
+header{background:var(--teal);color:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+header b{font-size:1.1rem;font-weight:800}
+.author{font-size:.85rem;font-weight:600;background:rgba(255,255,255,.2);padding:2px 10px;border-radius:8px}
+.dots{display:flex;gap:6px}
+.dots button{width:30px;height:30px;border-radius:50%;border:2px solid #fff;background:transparent;color:#fff;font:inherit;font-size:.8rem;cursor:pointer;line-height:1}
+.dots button.on{background:#fff;color:var(--teal);font-weight:800}
+.skip{border:0;background:rgba(255,255,255,.2);color:#fff;border-radius:8px;padding:2px 12px;font:inherit;cursor:pointer}
+main{max-width:760px;margin:0 auto;padding:0 14px 60px}
+#fig{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding-top:10px;background:var(--bg)}
+#fig:empty{display:none}
+#txt>*{scroll-margin-top:46vh}
+h2{margin:14px 0 6px;font-size:1.3rem;color:var(--teal);font-weight:800}
+.p,.ex{margin:8px 0}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .35em;line-height:1.35}
+.fr .n{border-bottom:2px solid currentColor;padding:0 .45em}.fr .dn{padding:0 .45em}
+.f2{direction:ltr;text-align:center;font-size:1.1rem;font-weight:600;margin:2px 0 8px;color:var(--pink)}
+.f{direction:ltr;text-align:center;font-size:1.25rem;font-weight:600;margin:10px 0;color:var(--pink);min-height:2em}
+.d{border:2px solid var(--teal);border-radius:12px;background:var(--card);padding:8px 16px;margin:12px 0;font-weight:600}
+.ex{border-right:4px solid var(--pink);padding:2px 12px;background:var(--card);border-radius:6px}
+.typing::after{content:"▍";color:var(--pink);animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+.demo,.quiz{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;margin:12px 0}
+#fig .demo{margin:0;box-shadow:0 8px 10px -8px rgba(0,0,0,.4)}
+svg{user-select:none;-webkit-user-select:none;width:100%;height:auto;display:block;direction:ltr;touch-action:none;max-height:38vh}
+.ro{direction:ltr;display:none;grid-template-columns:1fr 1fr;gap:0 14px;font-size:.9rem;padding:2px 8px;color:var(--mut)}
+.ro b{color:var(--ink)}
+button.go,.opt{font:inherit;cursor:pointer;border-radius:10px;border:2px solid var(--teal);background:transparent;color:var(--ink);padding:3px 14px}
+button.go{background:var(--pink);border-color:var(--pink);color:#fff;font-weight:600;margin:8px 0}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.opt{min-width:90px;font-weight:600}
+.opt.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.no{border-color:var(--pink);color:var(--pink)}
+.fb{min-height:1.8em;color:var(--mut)}
+.hd{cursor:grab}
+.hr{fill:none;stroke:var(--pink);stroke-width:2;stroke-dasharray:4 4;pointer-events:none}
+circle.cir{fill:none;stroke:var(--ink);stroke-width:2}
+.ln{stroke:var(--ink);stroke-width:1.8}
+.pt{fill:var(--card);stroke:var(--ink);stroke-width:2}
+.pt.hd{stroke:var(--pink);stroke-width:3}
+.mk{fill:none;stroke:var(--mut);stroke-width:2.5}
+.tf{fill:none;stroke:none}
+.sc{fill:none;stroke:var(--mut);stroke-width:1.5}
+.st{font-weight:800;color:var(--pink);margin:14px 0 2px}
+.h1{stroke:var(--teal);stroke-width:4}.h2{stroke:var(--pink);stroke-width:4}.h3{stroke:var(--am);stroke-width:5}
+.tf.h1{fill:var(--teal);fill-opacity:.3;stroke-width:2}.tf.h2{fill:var(--pink);fill-opacity:.3;stroke-width:2}.tf.h3{fill:var(--am);fill-opacity:.2;stroke-width:2;stroke-dasharray:6 4}
+.pt.h3{fill:var(--am)}
+.h4{stroke:#8e63f2;stroke-width:4}
+.tf.h4{fill:#8e63f2;fill-opacity:.3;stroke-width:2}
+.sc.h3{fill:var(--am);fill-opacity:.5;stroke:var(--am);stroke-width:2}.sc.h4{fill:#8e63f2;fill-opacity:.5;stroke:#8e63f2;stroke-width:2}
+text.lb{font:600 16px Vazirmatn,sans-serif;fill:var(--ink)}
+.nw{stroke-dasharray:1;stroke-dashoffset:1;animation:dr 1.5s ease forwards}
+@keyframes dr{to{stroke-dashoffset:0}}
+.nf{animation:fi 1s}
+@keyframes fi{from{opacity:0}}
+@media (prefers-reduced-motion:reduce){.typing::after,.nw,.nf{animation:none}.nw{stroke-dasharray:none}}
+</style>
+</head>
+<body>
+<header>
+  <b>رابطه‌های طولی در دایره</b>
+  <span class="author">طراح: زینب صفری</span>
+  <div class="dots" id="dots"></div>
+  <button class="skip" id="skip">سریع‌تر تایپ کن</button>
+</header>
+<main><div id="fig"></div><div id="txt"></div></main>
+<script>
+const NS='http://www.w3.org/2000/svg',$=s=>document.querySelector(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const el=(t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e};
+let fast=false,run=0,F=null;
+$('#skip').onclick=()=>fast=true;
+const scroll=e=>{const r=e.getBoundingClientRect();if(r.bottom>innerHeight-30)window.scrollBy({top:r.bottom-innerHeight+90,behavior:'auto'})};
+async function typeInto(e,txt,tok){e.classList.add('typing');let n=0;for(const ch of txt){if(tok!==run)return;e.textContent+=ch;if(++n%5===0)scroll(e);if(!fast)await sleep(ch===' '?45:80);}scroll(e);e.classList.remove('typing');}
+
+async function typeFormula(e,str,tok){
+ e.classList.add('typing');const re=/(\S+) \/ (\S+)/g;let last=0,m,parts=[];
+ while((m=re.exec(str))){if(m.index>last)parts.push(str.slice(last,m.index));parts.push([m[1],m[2]]);last=re.lastIndex}
+ if(last<str.length)parts.push(str.slice(last));
+ const ty=async(node,t)=>{for(const ch of t){if(tok!==run)return;node.data+=ch;if(!fast)await sleep(ch===' '?45:80)}};
+ for(const pt of parts){
+  if(tok!==run)return;
+  if(typeof pt==='string'){const t=document.createTextNode('');e.append(t);await ty(t,pt)}
+  else{const f=el('span','fr'),n=el('span','n'),d=el('span','dn'),a=document.createTextNode(''),b=document.createTextNode('');n.append(a);d.append(b);f.append(n,d);e.append(f);await ty(a,pt[0]);await ty(b,pt[1])}
+  scroll(e);
+ }
+ e.classList.remove('typing');
+}
+const SIMPLE={in:'circ sAM sBM sCM sDM pA pB pC pD M',out:'circ lMB lMD sMA sMC pA pB pC pD M',tan:'circ lMB lMT sMA pA pB pT M'};
+const T12={tMAD:1,tMCB:2},T3={tMAC:4,tMDB:2},T4={tMTA:4,tMBT:2};
+const ALL={in:'circ sAM sBM sCM sDM sAD sCB tMAD tMCB arcBD arcAC aA aC aD aB aM1 aM2 pA pB pC pD M',
+out:'circ lMB lMD sMA sMC sAC sBD tMAC tMDB quad aA aD pA pB pC pD M',
+tan:'circ lMB lMT sMA sTA sTB tMTA tMBT arcTA aT aB pA pB pT M'};
+const S=[
+{k:'in',h:'۱. وترهای متقاطع درون دایره',items:[
+['p','اول یک دایره رسم می‌کنیم.','circ',{}],
+['p','دو وتر AB و CD را طوری می‌کشیم که درون دایره در نقطهٔ M یکدیگر را قطع کنند.','sAM sBM sCM sDM pA pB pC pD M',{sAM:1,sBM:1,sCM:2,sDM:2}],
+['p','حالا A را به D و C را به B وصل می‌کنیم.','sAD sCB',{sAD:1,sCB:2}],
+['p','دو مثلث MAD (آبی) و MCB (صورتی) ساخته شد. به نظرت متشابه‌اند؟','tMAD tMCB',T12],
+['btn','علت تشابه را نشان بده'],
+['st','گام ۱: زاویه‌های A و C'],
+['p',[['زاویه‌های A و C هر دو محاطی‌اند','aA aC',{aA:3,aC:3}],[' و روبروی یک کمان مشترک (BD) هستند،','arcBD',{aA:3,aC:3,arcBD:3}],[' پس برابرند.']]],
+['btn','گام بعدی'],
+['st','گام ۲: زاویه‌های D و B'],
+['p',[['زاویه‌های D و B هم محاطی‌اند','aD aB',{aD:4,aB:4}],[' و روبروی کمان مشترک AC هستند،','arcAC',{aD:4,aB:4,arcAC:4}],[' پس آن‌ها هم برابرند.']]],
+['btn','گام بعدی'],
+['st','گام ۳: زاویه‌های رأس M'],
+['p',[['زاویه‌های رأس M متقابل به رأس‌اند','aM1 aM2',{aM1:3,aM2:3}],[' و برابرند.']]],
+['p','سه زاویهٔ برابر داریم، پس دو مثلث متشابه‌اند.','',T12],
+['free','خودت امتحان کن: نقطه‌ها را روی دایره بکشان و ببین مثلث‌ها همیشه متشابه می‌مانند.'],
+['quiz',{q:'زاویهٔ D در مثلث MAD با کدام زاویه برابر است؟',o:['زاویهٔ B در مثلث MCB','زاویهٔ C در مثلث MCB','زاویهٔ M در مثلث MCB'],a:0,h:'هر دو روبروی کمان AC هستند.',e:'هر دو محاطی و روبروی کمان AC‌اند.'}]]},
+{k:'in',init:'circ sAM sBM sCM sDM sAD sCB tMAD tMCB pA pB pC pD M',h:'۲. از تشابه به رابطهٔ طولی',items:[
+['p','در بخش قبل دیدیم دو مثلث MAD (آبی) و MCB (صورتی) متشابه‌اند. چرا؟','',T12],
+['btn','علت تشابه را یادآوری کن'],
+['st','گام ۱: زاویه‌های برابر'],
+['p',[['زاویه‌های A و C روبروی کمان BD‌اند،','aA aC arcBD',{aA:3,aC:3,arcBD:3}],[' زاویه‌های D و B روبروی کمان AC‌اند،','aD aB arcAC',{aD:4,aB:4,arcAC:4}],[' و زاویه‌های رأس M متقابل به رأس‌اند.','aM1 aM2',{aM1:3,aM2:3}]]],
+['p','سه زاویهٔ برابر، پس دو مثلث متشابه‌اند.','',T12],
+['btn','گام بعدی'],
+['st','گام ۲: ضلع‌های متناظر'],
+['p',[['ضلع AM در مثلث MAD روبروی زاویهٔ D است و ضلع CM در مثلث MCB روبروی زاویهٔ B؛ پس AM و CM متناظرند.','',{sAM:1,sCM:1}],[' همین‌طور DM روبروی A و BM روبروی C است؛ پس DM و BM متناظرند.','',{sAM:1,sCM:1,sDM:2,sBM:2}]]],
+['btn','گام بعدی'],
+['st','گام ۳: نوشتن تناسب'],
+['p','در دو مثلث متشابه، نسبت ضلع‌های متناظر برابر است:','',{sAM:1,sCM:1,sDM:2,sBM:2}],
+['f','AM / CM = DM / BM','',{sAM:1,sCM:1,sDM:2,sBM:2}],
+['btn','گام بعدی'],
+['st','گام ۴: طرفین وسطین'],
+['p','طرفین وسطین می‌کنیم:'],
+['f','AM × BM = CM × DM','',{sAM:1,sBM:1,sCM:2,sDM:2}],
+['d','قضیه: اگر دو وتر AB و CD درون دایره در نقطهٔ M یکدیگر را قطع کنند، MA·MB = MC·MD.'],
+['ex','مثال: فرض کن AM = 3 و BM = 8 و CM = 4 باشد. می‌خواهیم DM را پیدا کنیم. طبق قضیه:'],
+['f2','3 × 8 = 4 × DM'],
+['f2','DM = 24 ÷ 4 = 6'],
+['quiz',{q:'حالا نوبت توست: AM = 5 و BM = 6 و CM = 3. DM چقدر است؟',o:['DM = 8','DM = 10','DM = 12'],a:1,h:'حاصل‌ضرب 5 × 6 را بر 3 تقسیم کن.',e:'30 ÷ 3 = 10.'}]]},
+{k:'out',h:'۳. دو قاطع از بیرون دایره',items:[
+['p','دوباره از یک دایره شروع می‌کنیم و نقطهٔ M را بیرون آن می‌گیریم.','circ M',{M:3}],
+['p','از M دو قاطع می‌کشیم: یکی دایره را در A و B می‌برد و دیگری در C و D (A و C به M نزدیک‌ترند).','lMB lMD sMA sMC pA pB pC pD',{lMB:4,lMD:2}],
+['p','A را به C و B را به D وصل می‌کنیم.','sAC sBD',{sAC:4,sBD:2}],
+['p','دو مثلث MAC (بنفش) و MDB (صورتی) ساخته شد. زاویهٔ M در هر دو مشترک است.','tMAC tMDB',{...T3,M:3}],
+['p',[['چهارضلعی ABDC محاطی است،','quad',{quad:3}],[' پس زاویهٔ خارجی A (یعنی MAC)','aA',{quad:3,aA:3}],[' با زاویهٔ داخلی روبه‌رویش، یعنی D، برابر است.','aD',{quad:3,aA:3,aD:3}]]],
+['p','دو مثلث دو زاویهٔ برابر دارند، پس متشابه‌اند.','',T3],
+['free','M و نقطه‌های A و C را بکشان و مقدارها را ببین.'],
+['p','پس طبق تشابه، نسبت ضلع‌های متناظر برابر است:'],
+['f','MA / MD = MC / MB','',{sMA:4,lMD:2,sMC:4,lMB:2}],
+['p','طرفین وسطین می‌کنیم:'],
+['f','MA × MB = MC × MD','',{sMA:4,lMB:2,sMC:4,lMD:2}],
+['d','قضیه: اگر از نقطهٔ M بیرون دایره دو قاطع رسم شود، MA·MB = MC·MD.'],
+['ex','مثال: MA = 4 و MB = 9 و MC = 3 است. MD را پیدا می‌کنیم:'],
+['f2','4 × 9 = 3 × MD'],
+['f2','MD = 36 ÷ 3 = 12'],
+['quiz',{q:'MA = 2 و MB = 12 و MC = 3. MD چقدر است؟',o:['MD = 6','MD = 8','MD = 9'],a:1,h:'2 × 12 = 3 × MD',e:'24 ÷ 3 = 8.'}]]},
+{k:'tan',h:'۴. وقتی یکی از قاطع‌ها مماس شود',items:[
+['p','حالا از M یک قاطع MAB و یک مماس MT رسم می‌کنیم (T نقطهٔ تماس است).','circ M lMB lMT sMA pA pB pT',{lMB:4,lMT:2}],
+['p','T را به A و B وصل می‌کنیم تا مثلث‌های MTA (بنفش) و MBT (صورتی) ساخته شوند. زاویهٔ M مشترک است.','sTA sTB tMTA tMBT',{...T4,M:3}],
+['p',[['زاویهٔ بین مماس و وتر (MTA) نصف کمان TA است.','aT arcTA',{aT:3,arcTA:3}],[' زاویهٔ محاطی TBM هم نصف همین کمان است،','aB',{aT:3,arcTA:3,aB:3}],[' پس برابرند.']]],
+['p','دو مثلث دو زاویهٔ برابر دارند، پس متشابه هستند.','',T4],
+['p','چون دو مثلث متشابه هستند، نسبت ضلع‌های متناظر را به صورت کسر می‌نویسیم:','',{sMA:4,lMT:2,lMB:4}],
+['f','MA / MT = MT / MB','',{sMA:4,lMT:2,lMB:4}],
+['p','حالا طرفین وسطین می‌کنیم:','',{sMA:4,lMB:4,lMT:2}],
+['f2','MT × MT = MA × MB'],
+['f','MT² = MA × MB','',{sMA:4,lMB:4,lMT:2}],
+['d','قضیه: اگر از M بیرون دایره یک مماس MT و یک قاطع MAB رسم شود، MT² = MA·MB.'],
+['free','M و A را بکشان؛ همیشه MT² با MA × MB برابر می‌ماند.'],
+['quiz',{q:'MA = 4 و MB = 9. طول مماس MT چقدر است؟',o:['MT = 6','MT = 36','MT = 6.5'],a:0,h:'MT² = 4 × 9 = 36؛ جذر بگیر.',e:'MT² = 36 پس MT = 6.'}]]},
+{h:'۵. جمع‌بندی',items:[
+['d','هر خطی که از نقطهٔ M بگذرد و دایره را در دو نقطه ببرد، حاصل‌ضرب فاصله‌های M تا آن دو نقطه عدد ثابتی است؛ چه M درون دایره باشد چه بیرون. در حالت مماس این عدد برابر MT² است.'],
+['p','حالت اول: M درون دایره است و دو وتر از آن می‌گذرند.'],
+['fig','in',{sAM:1,sBM:1,sCM:2,sDM:2}],
+['f2','AM × BM = CM × DM'],
+['p','حالت دوم: M بیرون دایره است و دو قاطع از آن می‌گذرند.'],
+['fig','out',{sMA:4,lMB:2,sMC:4,lMD:2}],
+['f2','MA × MB = MC × MD'],
+['p','حالت سوم: یکی از قاطع‌ها مماس است.'],
+['fig','tan',{sMA:4,lMB:4,lMT:2}],
+['f2','MT² = MA × MB'],
+['p','هر سه قضیه یک ایده داشتند: دو زاویهٔ برابر، پس دو مثلث متشابه، پس تناسب اضلاع و طرفین وسطین.']]}
+,
+{h:'۶. آزمون و تمرین‌های تعاملی',items:[
+['d','در این بخش دانش خود را با حل مسائل کاربردی و تستی از هر سه قضیه بسنجید.'],
+['quiz',{
+ q:'دو وتر AB و CD در نقطهٔ M متقاطع‌اند. اگر MA = x و MB = x + 5 باشد و همچنین MC = 3 و MD = 8 باشند، مقدار مثبت x کدام است؟',
+ o:['x = 2','x = 3','x = 4'],
+ a:1,
+ h:'معادله تشکیل بده: x(x + 5) = 3 × 8 = 24. کدام مقدار در آن صدق می‌کند؟',
+ e:'x² + 5x = 24 پس x² + 5x - 24 = 0 یعنی (x - 3)(x + 8) = 0، بنابراین مقدار مثبت x برابر 3 است.'
+}],
+['quiz',{
+ q:'از نقطهٔ M بیرون دایره دو قاطع MAB و MCD رسم شده است. اگر MA = 4 و طول وتر AB برابر 8 باشد (پس کل قاطع MB = 12)، و قاطع دیگر با فاصلهٔ بیرونی MC = 6 باشد، طول وتر CD چقدر است؟',
+ o:['طول CD = 2','طول CD = 6','طول CD = 8'],
+ a:0,
+ h:'ابتدا کل قاطع MD را پیدا کن: 4 × 12 = 6 × MD. سپس طول وتر CD = MD - MC را حساب کن.',
+ e:'کل قاطع MD = 48 ÷ 6 = 8 است. بنابراین طول وتر CD برابر 8 - 6 = 2 خواهد بود.'
+}],
+['quiz',{
+ q:'از نقطهٔ M بیرون دایره مماس MT و قاطع MAB رسم شده است. اگر MT = 10 و وتر AB = 21 و قطعهٔ بیرونی MA = x باشد، مقدار x چقدر است؟',
+ o:['x = 4','x = 5','x = 6'],
+ a:0,
+ h:'طول کل قاطع MB برابر x + 21 است. رابطهٔ MT² = MA × MB را بنویس: 100 = x(x + 21).',
+ e:'معادله به صورت x² + 21x - 100 = 0 درمی‌آید که ریشهٔ مثبت آن (x - 4)(x + 25) = 0 یعنی x = 4 است.'
+}],
+['quiz',{
+ q:'اگر نقطهٔ M درون یک دایره ثابت باشد، کدام عبارت دربارهٔ تمام وترهایی که از نقطهٔ M می‌گذرند همیشه درست است؟',
+ o:['حاصل‌ضرب فاصله‌های M تا دو سر هر وتر همیشه مقداری ثابت است','مجموع فاصله‌های M تا دو سر هر وتر همیشه مقداری ثابت است','زاویهٔ بین هر دو وتر متقاطع همیشه قائمه است'],
+ a:0,
+ h:'به اصل قضیه فکر کن: در تمام وترهای گذرنده از M، ضرب MA · MB چه خاصیتی دارد؟',
+ e:'طبق قضیهٔ وترهای متقاطع، برای هر وتری مثل AB که از M درون دایره بگذرد، حاصل‌ضرب MA × MB همواره عددی ثابت است.'
+}],
+['p','آفرین! شما تمامی مفاهیم و رابطه‌های طولی دایره را با موفقیت یاد گرفتید و تمرین‌ها را حل کردید. 🎉']
+]}
+];
+
+function mark(i){document.querySelectorAll('#dots button').forEach((b,j)=>b.classList.toggle('on',i===j));}
+S.forEach((s,i)=>{const b=el('button');b.textContent=i+1;b.onclick=()=>stage(i);$('#dots').append(b)});
+
+async function stage(i){
+ const tok=++run;fast=false;const s=S[i],box=$('#txt');box.innerHTML='';mark(i);window.scrollTo(0,0);
+ $('#fig').innerHTML='';F=s.k?mkFig(s.k,s.init):null;if(F)$('#fig').append(F.w);
+ const h=el('h2');box.append(h);await typeInto(h,s.h,tok);
+ for(const [k,v,sh,hl] of s.items){
+  if(tok!==run)return;
+  if(k==='quiz'){await quiz(box,v);continue}
+  if(k==='btn'){await gate(box,v);continue}
+  if(k==='fig'){const G=mkFig(v,SIMPLE[v]);G.free(1);G.cue('',sh);box.append(G.w);scroll(G.w);if(!fast)await sleep(900);continue}
+  const e=el('div',k==='free'?'p':k);box.append(e);scroll(e);
+  if(k==='free')F.free();
+  const segs=Array.isArray(v)?v:[[v,sh,hl]];
+  for(const [t,a,b] of segs){if(tok!==run)return;if(F&&k!=='free'&&(a!=null||b))F.cue(a,b);await (k==='f'?typeFormula:typeInto)(e,t,tok);}
+  if(!fast)await sleep(k==='p'||k==='ex'||k==='d'?700:400);
+  if(k==='free')await gate(box,'فهمیدم، ادامه بده');
+ }
+ if(tok!==run)return;
+ const n=el('button','go');n.textContent=i<S.length-1?'بحث بعدی ◀':'شروع دوباره';n.onclick=()=>stage((i+1)%S.length);box.append(n);scroll(n);
+}
+function gate(box,label){return new Promise(r=>{const b=el('button','go');b.textContent=label;b.onclick=()=>{b.remove();r()};box.append(b);scroll(b)})}
+function quiz(box,v){return new Promise(res=>{
+ const q=el('div','quiz'),t=el('b'),row=el('div','opts'),fb=el('div','fb');t.textContent=v.q;
+ v.o.forEach((s,i)=>{const b=el('button','opt');b.dir='auto';b.textContent=s;b.onclick=()=>{
+  if(i===v.a){b.classList.add('ok');fb.textContent='آفرین! '+v.e;row.querySelectorAll('button').forEach(x=>x.disabled=true);setTimeout(res,1500);}
+  else{b.classList.add('no');fb.textContent='دوباره فکر کن. راهنما: '+v.h;}};row.append(b)});
+ q.append(t,row,fb);box.append(q);scroll(q);})}
+
+/* ---------- geometry ---------- */
+const O={x:180,y:200},R=115,U=20,PI=Math.PI;
+const P=a=>({x:O.x+R*Math.cos(a),y:O.y+R*Math.sin(a)});
+const ang=p=>Math.atan2(p.y-O.y,p.x-O.x);
+const dist=(p,q)=>Math.hypot(p.x-q.x,p.y-q.y);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const nrm=x=>((x%(2*PI))+2*PI)%(2*PI);
+function inter(p1,p2,p3,p4){const d=(p1.x-p2.x)*(p3.y-p4.y)-(p1.y-p2.y)*(p3.x-p4.x);if(Math.abs(d)<1e-6)return null;
+ const a=p1.x*p2.y-p1.y*p2.x,b=p3.x*p4.y-p3.y*p4.x;return{x:(a*(p3.x-p4.x)-(p1.x-p2.x)*b)/d,y:(a*(p3.y-p4.y)-(p1.y-p2.y)*b)/d}}
+function sec(M,A){const dx=A.x-M.x,dy=A.y-M.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L,fx=M.x-O.x,fy=M.y-O.y;
+ const b=fx*ux+fy*uy,c=fx*fx+fy*fy-R*R,s=Math.sqrt(Math.max(b*b-c,0));
+ return[-b-s,-b+s].map(t=>({x:M.x+t*ux,y:M.y+t*uy}))}
+function tangent(M){const d=dist(M,O),f=Math.atan2(M.y-O.y,M.x-O.x),al=Math.acos(R/d),a=P(f+al),b=P(f-al);return a.y<b.y?a:b}
+const mkp=(V,P1,P2,r)=>{const a1=Math.atan2(P1.y-V.y,P1.x-V.x),a2=Math.atan2(P2.y-V.y,P2.x-V.x);let d=a2-a1;while(d>PI)d-=2*PI;while(d<=-PI)d+=2*PI;
+ return`M${V.x} ${V.y}L${V.x+r*Math.cos(a1)} ${V.y+r*Math.sin(a1)}A${r} ${r} 0 0 ${d>0?1:0} ${V.x+r*Math.cos(a2)} ${V.y+r*Math.sin(a2)}Z`};
+const arcp=(P1,P2,av)=>{const a1=ang(P1),D=nrm(ang(P2)-a1),inc=nrm(ang(av)-a1)>D,span=inc?D:2*PI-D;
+ return`M${P1.x} ${P1.y}A${R} ${R} 0 ${span>PI?1:0} ${inc?1:0} ${P2.x} ${P2.y}`};
+
+function mkFig(kind,init){
+ const w=el('div','demo'),svg=document.createElementNS(NS,'svg'),ro=el('div','ro');
+ svg.setAttribute('viewBox','0 0 480 400');w.append(svg,ro);
+ const q=kind==='in'?{a:-1.745,b:1.396,c:-.524,d:2.618}:{a:kind==='tan'?-.05:-.25,c:.3,M:{x:410,y:kind==='tan'?230:200}};
+ const DR={in:{pA:'a',pB:'b',pC:'c',pD:'d'},out:{pA:'a',pC:'c',M:'M'},tan:{pA:'a',M:'M'}}[kind];
+ const hp={};const vis=new Set((init||'').split(' ').filter(Boolean)),fresh=new Set();let hl={},fr=false;
+ const fl=t=>{const m=t.match(/^(.+)\/(.+)$/);return m?`<span class="fr"><span class="n">${m[1]}</span><span class="dn">${m[2]}</span></span>`:t};
+ const f1=x=>x.toFixed(1),f2=x=>x.toFixed(2),L=(p,r)=>dist(p,r)/U;
+ function draw(){
+  let A,B,C,D,T,M=q.M;
+  if(kind==='in'){A=P(q.a);B=P(q.b);C=P(q.c);D=P(q.d);M=inter(A,B,C,D);if(!M)return}
+  else{[A,B]=sec(M,P(q.a));if(kind==='out')[C,D]=sec(M,P(q.c));else T=tangent(M)}
+  const c=(k,b,f)=>b+(hl[k]?' h'+hl[k]:'')+(fresh.has(k)?(f?' nf':' nw'):'');
+  const V=k=>vis.has(k);
+  const ln=(k,a,b)=>V(k)?`<line pathLength="1" class="${c(k,'ln')}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`:'';
+  const poly=(k,cl,...p)=>V(k)?`<polygon class="${c(k,cl,1)}" points="${p.map(t=>t.x+','+t.y).join(' ')}"/>`:'';
+  const path=(k,d)=>V(k)?`<path pathLength="1" class="${c(k,'mk')}" d="${d}"/>`:'';
+  const mk=(k,v,a,b)=>V(k)?`<path class="${c(k,'sc',1)}" d="${mkp(v,a,b,28)}"/>`:'';
+  const pt=(k,n,p)=>{if(!V(k))return'';const dk=fr&&DR[k],dx=p.x-O.x,dy=p.y-O.y,l=Math.hypot(dx,dy)||1,o=k==='M'?16:20,
+   lx=k==='M'&&kind==='in'?p.x+9:p.x+dx/l*o-5,ly=k==='M'&&kind==='in'?p.y-9:p.y+dy/l*o+6;
+   return`<circle class="${c(k,'pt'+(dk?' hd':''),1)}" cx="${p.x}" cy="${p.y}" r="${dk?9:4.5}"/>`+(dk?(hp[dk]=p,`<circle class="hr" cx="${p.x}" cy="${p.y}" r="17"/>`):'')+`<text class="${fresh.has(k)?'lb nf':'lb'}" x="${lx}" y="${ly}">${n}</text>`};
+  for(const k in hp)delete hp[k];let s='',rows;
+  if(kind==='in'){
+   const circ=V('circ')?`<circle pathLength="1" class="${c('circ','cir')}" cx="${O.x}" cy="${O.y}" r="${R}"/>`:'';
+   s=poly('tMAD','tf',M,A,D)+poly('tMCB','tf',M,C,B)+circ+ln('sAM',M,A)+ln('sBM',M,B)+ln('sCM',M,C)+ln('sDM',M,D)+ln('sAD',A,D)+ln('sCB',C,B)
+    +path('arcBD',arcp(B,D,A))+path('arcAC',arcp(A,C,D))+mk('aA',A,M,D)+mk('aC',C,M,B)+mk('aD',D,M,A)+mk('aB',B,M,C)+mk('aM1',M,A,D)+mk('aM2',M,C,B)
+    +pt('pA','A',A)+pt('pB','B',B)+pt('pC','C',C)+pt('pD','D',D)+pt('M','M',M);
+   rows=[['AM×BM',f1(L(A,M)*L(B,M))],['CM×DM',f1(L(C,M)*L(D,M))],['AM/CM',f2(L(A,M)/L(C,M))],['DM/BM',f2(L(D,M)/L(B,M))]];
+  }else{
+   const circ=V('circ')?`<circle pathLength="1" class="${c('circ','cir')}" cx="${O.x}" cy="${O.y}" r="${R}"/>`:'';
+   if(kind==='out'){
+    s=poly('quad','tf',A,B,D,C)+poly('tMAC','tf',M,A,C)+poly('tMDB','tf',M,D,B)+circ+ln('lMB',M,B)+ln('lMD',M,D)+ln('sMA',M,A)+ln('sMC',M,C)+ln('sAC',A,C)+ln('sBD',B,D)
+     +mk('aA',A,M,C)+mk('aD',D,M,B)+pt('pA','A',A)+pt('pB','B',B)+pt('pC','C',C)+pt('pD','D',D)+pt('M','M',M);
+    rows=[['MA×MB',f1(L(M,A)*L(M,B))],['MC×MD',f1(L(M,C)*L(M,D))],['MA/MD',f2(L(M,A)/L(M,D))],['MC/MB',f2(L(M,C)/L(M,B))]];
+   }else{
+    s=poly('tMTA','tf',M,T,A)+poly('tMBT','tf',M,B,T)+circ+ln('lMB',M,B)+ln('lMT',M,T)+ln('sMA',M,A)+ln('sTA',T,A)+ln('sTB',T,B)
+     +path('arcTA',arcp(T,A,B))+mk('aT',T,M,A)+mk('aB',B,T,M)+pt('pA','A',A)+pt('pB','B',B)+pt('pT','T',T)+pt('M','M',M);
+    rows=[['MT²',f1(L(M,T)**2)],['MA×MB',f1(L(M,A)*L(M,B))],['MA/MT',f2(L(M,A)/L(M,T))],['MT/MB',f2(L(M,T)/L(M,B))]];
+   }
+  }
+  svg.innerHTML=s;fresh.clear();
+  if(fr)ro.innerHTML=rows.map(r=>`<span>${fl(r[0])} = <b>${r[1]}</b></span>`).join('');
+ }
+ let drag=null;
+ const pos=e=>{const m=svg.createSVGPoint();m.x=e.clientX;m.y=e.clientY;return m.matrixTransform(svg.getScreenCTM().inverse())};
+ const near=e=>{const p=pos(e);let b=null,bd=50;for(const k in hp){const d=dist(p,hp[k]);if(d<bd){bd=d;b=k}}return b};
+ const mv=e=>{if(!drag)return;e.preventDefault();const p=pos(e);
+  if(drag==='M'){let m={x:clamp(p.x,20,465),y:clamp(p.y,20,380)};const d=dist(m,O),mn=R+12;if(d<mn)m={x:O.x+(m.x-O.x)/d*mn,y:O.y+(m.y-O.y)/d*mn};q.M=m}
+  else q[drag]=ang(p);
+  draw()};
+ const up=()=>{drag=null;removeEventListener('pointermove',mv);removeEventListener('pointerup',up);removeEventListener('pointercancel',up)};
+ svg.onpointerdown=e=>{if(!fr)return;const k=near(e);if(!k)return;e.preventDefault();drag=k;addEventListener('pointermove',mv,{passive:false});addEventListener('pointerup',up);addEventListener('pointercancel',up)};
+ const cue=(sh,h)=>{(sh||'').split(' ').filter(Boolean).forEach(k=>{if(!vis.has(k)){vis.add(k);fresh.add(k)}});hl=h||{};draw()};
+ draw();
+ return{w,cue,free(sm){fr=true;ro.style.display='grid';if(sm){draw();return}cue(ALL[kind],{...(kind==='in'?T12:kind==='out'?T3:T4)})}};
+}
+stage(0);
+</script>
+</body>
+</html>
